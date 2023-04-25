@@ -1,5 +1,8 @@
 package EGA.api.Services;
 
+import EGA.api.Entity.Compte;
+import EGA.api.Repository.CompteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Transactional
 @RequestMapping("api/v1/clients")
 public class ClientController {
     @Autowired
@@ -30,18 +34,23 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/")
+    @PostMapping("/saveClient")
     public Client createClient(@RequestBody Client client) {
         return clientRepository.save(client);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/updateClient")
     public ResponseEntity<Client> updateClient(@PathVariable(value = "id") Integer id, @RequestBody Client client) {
         Optional<Client> existingClient = clientRepository.findById(id);
         if (existingClient.isPresent()) {
             Client updatedClient = existingClient.get();
             updatedClient.setNom(client.getNom());
             updatedClient.setPrenom(client.getPrenom());
+            updatedClient.setSexe(client.getSexe());
+            updatedClient.setTelephone(client.getTelephone());
+            updatedClient.setCourriel(client.getCourriel());
+            updatedClient.setAdresse(client.getAdresse());
+            updatedClient.setNationalite(client.getNationalite());
             // set other properties
 
             Client savedClient = clientRepository.save(updatedClient);
@@ -50,7 +59,7 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/deleteClient")
     public ResponseEntity<Client> deleteClient(@PathVariable(value = "id") Integer id) {
         Optional<Client> client = clientRepository.findById(id);
         if (!client.isPresent()) {

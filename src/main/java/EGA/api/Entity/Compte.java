@@ -7,6 +7,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Compte {
     @Id
@@ -15,17 +18,23 @@ public class Compte {
     private TypeCompte typeCompte;
     private LocalDate dateCreation;
     private double solde;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @ManyToOne
+   /*@JoinColumn(name = "client_id")*/
     private Client client;
 
     public String getNumeroCompte(){
         return this.numeroCompte;
     }
+
+    public void setNumeroCompte(String numeroCompte) {
+        this.numeroCompte = numeroCompte;
+    }
+
     public TypeCompte getTypeCompte(){
         return this.typeCompte;
     }
-    public TypeCompte setTypeCompte(TypeCompte typeCompte){
+    public TypeCompte setTypeCompte(TypeCompte typeCompte)
+    {
         this.typeCompte = typeCompte;
         return this.typeCompte;
     }
@@ -34,6 +43,10 @@ public class Compte {
     }
 
     public Client getClient(){return this.client; }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public double getSolde(){
         return this.solde;
