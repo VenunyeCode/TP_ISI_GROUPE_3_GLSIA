@@ -18,10 +18,16 @@ import java.util.Optional;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private CompteRepository compteRepository;
 
     @GetMapping("/")
     public List<Client> getAllClients(){
         return clientRepository.findAll();
+    }
+    @GetMapping("/{id}/comptes")
+    public List<Compte> getAllAccountFromClient(@PathVariable(value = "id") Integer id){
+        return compteRepository.findByIdClient(id);
     }
 
     @GetMapping("/{id}")

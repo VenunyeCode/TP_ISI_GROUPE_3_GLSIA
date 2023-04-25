@@ -25,8 +25,8 @@ public class Client {
         private String telephone;
         private String courriel;
         private String nationalite;
-        @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-        private List<Compte> comptes;
+//        @OneToMany(mappedBy = "client")
+//        private List<Compte> comptes;
 
         public String getNom(){
             return this.nom;
